@@ -1,0 +1,103 @@
+//count nodes in tree , heigth of tree
+#include<iostream>
+#include<queue>
+
+using namespace std;
+
+class node{
+public:	
+	int data;
+	node* left;
+	node* right;
+	
+	//initialisation list - constructor
+	node(int d):data(d),left(NULL),right(NULL){}
+	
+};
+
+//taking input level by level
+void levelOrderBuild(node*&root){
+
+	cout<<"Enter Root Data - "<<endl;
+	int d;
+	cin>>d;
+
+	root  = new node(d);
+	queue<node*> q;
+	q.push(root);
+
+	while(!q.empty()){
+		node* n = q.front();
+		q.pop();
+
+		int c1,c2;
+		cout<<"Enter children of "<<n->data<<endl;
+		cin>>c1>>c2;
+		if(c1!=-1){
+			n->left = new node(c1);
+			q.push(n->left);
+		}
+		if(c2!=-1){
+			n->right = new node(c2);
+			q.push(n->right);
+		}
+	}
+}
+
+int updateTreeWithSums(node* root){
+	if(root==NULL){
+		return 0;
+	}
+	
+	if(root->left==NULL&&root->right==NULL){
+		return root->data;
+	}
+	
+	int temp=root->data;
+	int leftSum=updateTreeWithSums(root->left);
+	int rightSum=updateTreeWithSums(root->right);
+	
+	root->data=leftSum+rightSum;
+	
+	return temp+root->data;
+	
+}
+
+//printing tree level by level
+void levelOrderPrint(node* root){
+	queue<node*>q;
+	q.push(root);
+	q.push(NULL);
+	 
+	while(!q.empty()){
+		node* f=q.front();
+		q.pop();
+		if(f==NULL){
+			cout<<endl;
+			if(!q.empty()){
+				q.push(NULL); 
+			}
+		}else{
+		
+		cout<<f->data<<" ";
+		if(f->left){
+			q.push(f->left);
+		}
+		if(f->right){
+			q.push(f->right);
+		}
+	}
+	}
+	
+	return;	
+}
+
+
+int main(){
+	
+	node* root=NULL;
+	levelOrderBuild(root);
+	updateTreeWithSums(root);
+	levelOrderPrint(root);
+	return 0;
+}
