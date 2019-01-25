@@ -1,4 +1,5 @@
-#include<iostream>
+//mirror image of tree
+#include<bits/stdc++.h>
 #include<queue>
 
 using namespace std;
@@ -43,25 +44,6 @@ void levelOrderBuild(node*&root){
 	}
 }
 
-int updateTreeWithSums(node* root){
-	if(root==NULL){
-		return 0;
-	}
-	
-	if(root->left==NULL&&root->right==NULL){
-		return root->data;
-	}
-	
-	int temp=root->data;
-	int leftSum=updateTreeWithSums(root->left);
-	int rightSum=updateTreeWithSums(root->right);
-	
-	root->data=leftSum+rightSum;
-	
-	return temp+root->data;
-	
-}
-
 //printing tree level by level
 void levelOrderPrint(node* root){
 	queue<node*>q;
@@ -91,12 +73,23 @@ void levelOrderPrint(node* root){
 	return;	
 }
 
+void mirrorTree(node* root){
+	
+	if(root==NULL){
+		return;
+	}
+	
+	swap(root->left,root->right);
+	mirrorTree(root->left);
+	mirrorTree(root->right); 
+	
+}
 
 int main(){
 	
 	node* root=NULL;
 	levelOrderBuild(root);
-	updateTreeWithSums(root);
+	mirrorTree(root);
 	levelOrderPrint(root);
 	return 0;
 }
