@@ -1,5 +1,5 @@
 //hashing implementation
-#include<string.h>
+#include<bits/stdc++.h>
 using namespace std;
 
 template<typename T>
@@ -128,7 +128,17 @@ public:
 		}
 		return NULL;
 	}
-		
+	
+	//operator overloading
+	T& operator[](string key){
+		T* temp=search(key);
+		if(temp==NULL){
+			T newBox;
+			insert(key,newBox);
+			return *search(key);
+		}
+		return *temp;
+	}	
 	
 	void print(){
 		

@@ -13,6 +13,10 @@ int main(){
 	
 	h.print();
 	
+	//achieved using operator overloading
+	h["potato"]=10;
+	cout<<h["potato"];
+	
 	string fruit;
 	cin>>fruit;
 	
